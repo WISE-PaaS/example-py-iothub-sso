@@ -1,7 +1,7 @@
 ---
 applications:
   #application name
-- name: python-demo-jimmy
+- name: python-demo-{your name}
   #memory you want to give to appliaction
   memory: 128MB
   #disk you want to give to appliaction
