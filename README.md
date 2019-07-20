@@ -39,3 +39,6 @@ open two terminal
 .
 
     python publisher.py
+
+
+[https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/REAMME.md](https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/REAMME.md)
