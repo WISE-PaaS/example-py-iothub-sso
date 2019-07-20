@@ -1,0 +1,14 @@
+---
+applications:
+  #application name
+- name: python-demo-jimmy
+  #memory you want to give to appliaction
+  memory: 128MB
+  #disk you want to give to appliaction
+  disk_quota: 128MB
+  #help use compile the file when you push to cloud
+  buildpack: python_buildpack
+  #let the backend application begin。
+  command: python index.py
+services:
+- rabbitmq
