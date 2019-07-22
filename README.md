@@ -22,7 +22,9 @@ open the **`manifest.yml`** and editor the application name to yours，because t
     #cf push {application name}
     cf push python-demo-try
     
-    #cf env {application name} > env.json
+    #get the application environment
+    cf env {application name} > env.json 
+    
     
 Edit the **publisher.py** `broker、port、username、password` you can find in env.json
 
