@@ -20,7 +20,7 @@ This is WIES-PaaS iothub example-code include the sso and rabbitmq service。
 open **`manifest.yml`** and editor the **application name** to yours，because the appication can't duplicate。
 
     #cf push {application name}
-    cf push python-demo-try
+    cf push python-demo-jimmy
     
     #get the application environment
     cf env {application name} > env.json 
