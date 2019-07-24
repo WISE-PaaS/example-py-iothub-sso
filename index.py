@@ -22,10 +22,10 @@ def root():
 vcap_services=os.getenv('VCAP_SERVICES')
 vcap_services_js = json.loads(vcap_services)
 service_name='p-rabbitmq' 
-broker    = vcap_services_js['p-rabbitmq'][0]['credentials']['protocols']['mqtt']['host']
-username  = vcap_services_js['p-rabbitmq'][0]['credentials']['protocols']['mqtt']['username'].strip()
-password  = vcap_services_js['p-rabbitmq'][0]['credentials']['protocols']['mqtt']['password'].strip()
-mqtt_port = vcap_services_js['p-rabbitmq'][0]['credentials']['protocols']['mqtt']['port']
+broker    = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['host']
+username  = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['username'].strip()
+password  = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['password'].strip()
+mqtt_port = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['port']
 
 
 def on_connect(client, userdata, flags, rc):
