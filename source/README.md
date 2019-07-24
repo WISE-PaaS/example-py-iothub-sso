@@ -1,5 +1,5 @@
 
-# WISE-PaaS DCCS with python
+# WISE-PaaS IoT-hub SSO with python
 
 This tutorial we want to tell you how to build a application in WISE-PaaS include the SSO and DCCS to bind a services instance
 
