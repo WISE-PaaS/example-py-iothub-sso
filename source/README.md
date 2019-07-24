@@ -33,7 +33,7 @@ we can add three file index.py requirements.txt manifest.yml three file。
 
 index.py
 
-<iframe src="https://medium.com/media/e9fc5d1e6f579b40b1fe381cba58445a" frameborder=0></iframe>
+<script src="https://medium.com/media/e9fc5d1e6f579b40b1fe381cba58445a" frameborder=0></script>
 
 requirements.txt
 
