@@ -1,57 +1,53 @@
-# Example-python-Iothub-Postgresql
-
-This example tell you how to use the WISE-PaaS rabbitmq service to receive and send message and we use docker package our application。
-
-Build docker image in local
- 
-    docker build -t {image name} .
-    docker build -t example-js-docker-iothub .
-
-Go to docker hub add a new **Repository**
-
-Tag image to a docker hub  
-[Docker Hub](https://hub.docker.com/)
-
-    #docker tag {image name} {your account/dockerhub-resp name}
-    docker tag example-js-docker-iothub WISE-PaaS/example-js-docker-iothub
+# Example-python-Iothub
 
 
+This is WIES-PaaS iothub example-code include the sso and rabbitmq service。
 
-Push it to docker hub
+**https://wise-paas.advantech.com/en-us**
 
-    #docker push {your account/dockerhub-resp name}
-    docker push WISE-PaaS/example-js-docker-iothub
+## Quick Start
 
-Change **manifest.yml** application name
-
-check the application name in **manifest.yml** and **wise-paas service list**
-
-Use cf(cloud foundry) push to WISE-PaaS
-
-    #cf push --docker-image {your account/dockerhub-resp}
-    cf push --docker-image WISE-PaaS/example-js-docker-iothub
-
-Get application environment in WISE-PaaS
-
-    cf env example-js-docker-iothub > env.json
+    git clone this respository
+    
+    #cf login -skip-ssl-validation -a {api.domain_name}  -u "account" -p "password"
+    
+    cf login –skip-ssl-validation -a api.wise-paas.io -u xxxxx@advtech.com.tw -p xxxxxx
+    
+    #check the cf status
+    cf target
 
 
+open **`manifest.yml`** and editor the **application name** to yours，because the appication can't duplicate。
 
-Edit the **publisher.py** `mqttUri` to mqtt=>uri you can find in env.json 
+    #cf push {application name}
+    cf push python-demo-try
+    
+    #get the application environment
+    cf env {application name} > env.json 
 
-when you get it you need to change the host to  externalHosts
+open **`templates/index.html`**
+    
+    #change this **`python-demo-jimmy`** to your **application name**
+    var ssoUrl = myUrl.replace('python-demo-jimmy', 'portal-sso');
+    
+Edit the **publisher.py** `broker、port、username、password` you can find in env.json
 
-
-* uri :"VCAP_SERVICES => p-rabbitmq => mqtt => uri"
-* exnternalhost : "VCAP_SERVICES" => p-rabbitmq => externalHosts
-
-
+* bokrer:"VCAP_SERVICES => p-rabbitmq => externalHosts"
+* port :"VCAP_SERVICES => p-rabbitmq => mqtt => port"
+* username :"VCAP_SERVICES => p-rabbitmq => mqtt => username"
+* password: "VCAP_SERVICES => p-rabbitmq => mqtt => password"
 
 open two terminal
     
     #cf logs {application name}
-    cf logs example-js-docker-iothub 
+    cf logs python-demo-try
 
 .
 
     python publisher.py
+
+![https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/publish.PNG](https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/publish.PNG)
+
+# Step By Step Tutorial
+
+[https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/REAMME.md](https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/REAMME.md)
