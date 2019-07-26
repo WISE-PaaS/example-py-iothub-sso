@@ -15,8 +15,12 @@ This is WIES-PaaS iothub example-code include the sso and rabbitmq service。
     
     #check the cf status
     cf target
-    
-open **`manifest.yml`** and editor the **application name** to yours，because the appication can't duplicate。
+
+#### mainfest config
+open **`manifest.yml`** and editor the **application name**  to yours，because the appication can't duplicate。
+check the service instance name same as WISE-PaaS
+![https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/manifest_app_sername.PNG](https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/manifest_app_sername.PNG)
+![https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/wise-paas_instance_name.PNG](https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/wise-paas_instance_name.PNG)
 
 open **`templates/index.html`**
     
