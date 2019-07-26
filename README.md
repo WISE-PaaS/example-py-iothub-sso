@@ -16,6 +16,11 @@ This is WIES-PaaS iothub example-code include the sso and rabbitmq service。
     #check the cf status
     cf target
 
+open **`templates/index.html`**
+    
+    #change this **`python-demo-jimmy`** to your **application name**
+    var ssoUrl = myUrl.replace('python-demo-jimmy', 'portal-sso');
+
 
 open **`manifest.yml`** and editor the **application name** to yours，because the appication can't duplicate。
 
@@ -25,10 +30,7 @@ open **`manifest.yml`** and editor the **application name** to yours，because t
     #get the application environment
     cf env {application name} > env.json 
 
-open **`templates/index.html`**
-    
-    #change this **`python-demo-jimmy`** to your **application name**
-    var ssoUrl = myUrl.replace('python-demo-jimmy', 'portal-sso');
+
     
 Edit the **publisher.py** `broker、port、username、password` you can find in env.json
 
