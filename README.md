@@ -24,6 +24,7 @@ open **`templates/index.html`**
     var ssoUrl = myUrl.replace('python-demo-jimmy', 'portal-sso');
 
 
+push application and get environment
 
 
     #cf push {application name}
