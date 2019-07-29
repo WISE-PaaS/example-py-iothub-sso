@@ -64,7 +64,7 @@ push application and get environment
     cf push python-demo-try
     
     #get the application environment
-    cf env {application name} > env.json 
+    cf env python-demo-try > env.json 
 
 
     
