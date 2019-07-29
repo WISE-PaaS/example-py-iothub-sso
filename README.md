@@ -45,8 +45,10 @@ python3 package(those library you can try application in local):
 #### mainfest config
 open **`manifest.yml`** and editor the **application name**  to yours，because the appication can't duplicate。
 check the service instance name same as WISE-PaaS
-![https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/manifest_app_sername.PNG](https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/manifest_app_sername.PNG)
-![https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/wise-paas_instance_name.PNG](https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/wise-paas_instance_name.PNG)
+
+![Imgur](https://i.imgur.com/4eynKmE.png)
+
+![Imgur](https://i.imgur.com/VVMcYO8.png)
 
 open **`templates/index.html`**
     
