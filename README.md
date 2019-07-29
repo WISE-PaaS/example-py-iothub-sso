@@ -26,9 +26,6 @@ python3 package(those library you can try application in local):
     #python-backend
     pip3 install Flask
     
-    #python postgresql library
-    pip3 install sqlalchemy
-    pip3 install psycopg2
 
 ## Download this file
 
