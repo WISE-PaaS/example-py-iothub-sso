@@ -33,11 +33,39 @@ we can add three file index.py requirements.txt manifest.yml three file。
 
 index.py
 
-<script src="https://medium.com/media/e9fc5d1e6f579b40b1fe381cba58445a" ></script>
+<!--<script src="https://medium.com/media/e9fc5d1e6f579b40b1fe381cba58445a" ></script>-->
+
+```py
+from flask import Flask
+import os
+
+app = Flask(__name__)
+
+#port from cloud environment variable or localhost:3000
+port = int(os.getenv("PORT", 3000))
+
+@app.route('/')
+def hello_world():
+    if(port==3000):
+        return 'hello world! iam in the local'
+    elif(port==int(os.getenv("PORT"))):
+        return 'Hello World! i am in the cloud'
+
+
+
+if __name__ == '__main__':
+    # Run the app, listening on all IPs with our chosen port number
+    app.run(host='0.0.0.0', port=port)
+```
 
 requirements.txt
 
-<iframe src="https://medium.com/media/bb7bf69b1062ec7722dabd37dfa4a7d7" frameborder=0></iframe>
+<!--<iframe src="https://medium.com/media/bb7bf69b1062ec7722dabd37dfa4a7d7" frameborder=0></iframe>-->
+
+```
+Flask
+paho-mqtt
+```
 
 We can check out the back-end application does it work。
 
@@ -52,7 +80,23 @@ when we finish this we want push it to the WISE-PaaS，so we need to have a mani
 
 mainfest.yml
 
-<iframe src="https://medium.com/media/865ad4fa3204d9fe3a4da0bc069777bf" frameborder=0></iframe>
+<!--<iframe src="https://medium.com/media/865ad4fa3204d9fe3a4da0bc069777bf" frameborder=0></iframe>-->
+
+```
+---
+applications:
+  #application name
+- name: python-demo-{your name}
+  #memory you want to give to appliaction
+  memory: 128MB
+  #disk you want to give to appliaction
+  disk_quota: 128MB
+  #help use compile the file when you push to cloud
+  buildpack: python_buildpack
+  #let the backend application begin。(index.py is the above file name)
+  command: python index.py
+---
+```
 
 * name: application name
 
@@ -100,13 +144,109 @@ So,we need to add a new html file and use jQuery to fetch the login API。
     ~/dccs_with_python>cd templates
     ~/dccs_with_python/templates>touch index.html
 
-<iframe src="https://medium.com/media/dcc370a97553673c42a8ebcdad976407" frameborder=0></iframe>
+<!--<iframe src="https://medium.com/media/dcc370a97553673c42a8ebcdad976407" frameborder=0></iframe>-->
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>SSO Tutorial</title>
+    
+</head>
+
+<body>
+    <h1>hello</h1>
+    <div id="demo"></div>
+    
+    <button class="btn btn-primary" id="signInBtn" style="display: none;">Sign in</button>
+    <button class="btn btn-primary" id="signOutBtn" style="display: none;">Sign out</button>
+    <button class="btn btn-primary" id="management" style="display: none;">Management Portal</button>
+    <h1 id="helloMsg"></h1>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src=""></script>
+</body>
+<script>
+    $(document).ready(function(){
+    
+    
+        var myUrl = window.location.protocol + '//' + window.location.hostname;
+        var ssoUrl = myUrl.replace('python-demo-jimmy', 'portal-sso');
+        var manageUrl = 'https://portal-management.wise-paas.io/organizations'
+        document.getElementById('demo').innerHTML = myUrl;
+        
+        $('#signInBtn').click(function () {
+            window.location.href = ssoUrl + '/web/signIn.html?redirectUri=' + myUrl;
+    
+        });
+    
+        $('#signOutBtn').click(function () {
+            window.location.href = ssoUrl + '/web/signOut.html?redirectUri=' + myUrl;
+        });
+        $('#management').click(function () {
+            window.location.href = manageUrl;
+        });
+    
+        $.ajax({
+            url: ssoUrl + '/v2.0/users/me',
+            method: 'GET',
+            xhrFields: {
+                withCredentials: true
+            }
+        }).done(function (user) {
+            $('#signOutBtn').show();
+            $('#management').show();
+            $('#helloMsg').text('Hello, ' + user.firstName + ' ' + user.lastName + '!');
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            
+            $('#signInBtn').show();
+            
+            $('#helloMsg').text('Hi, please sign in first.');
+        });
+        
+    });
+</script>
+
+</html>
+```
+
 > You need to change your ssoUrl to your application name in code
 
 and we need to change our index.py code to send this html file
 
-<iframe src="https://medium.com/media/4b86e56cb0507cc52c44c160188a6b30" frameborder=0></iframe>
+<!--<iframe src="https://medium.com/media/4b86e56cb0507cc52c44c160188a6b30" frameborder=0></iframe>-->
 
+```py
+from flask import Flask,render_template
+import os
+
+app = Flask(__name__)
+
+#port from cloud environment variable or localhost:3000
+port = int(os.getenv("PORT", 3000))
+
+
+@app.route('/',methods=['GET'])
+def root():
+
+    if(port==3000):
+        
+        return 'hello world! i am in the local'
+
+    elif(port==int(os.getenv("PORT"))):
+    
+        
+        return render_template('index.html')
+        
+
+
+
+if __name__ == '__main__':
+    # Run the app, listening on all IPs with our chosen port number
+    app.run(host='0.0.0.0', port=port)
+```
 and we push it again
 
     ~/dccs_with_python>cf push python-demo-jimmy
@@ -124,7 +264,24 @@ we can see our Service Instance List have some service，we want to bind the rab
 
 add the service: -rabbitmq
 
-<iframe src="https://medium.com/media/83cff66220321a3836d7d944f85db6b8" frameborder=0></iframe>
+<!--<iframe src="https://medium.com/media/83cff66220321a3836d7d944f85db6b8" frameborder=0></iframe>-->
+
+```
+---
+applications:
+  #application name
+- name: python-demo-jimmy
+  #memory you want to give to appliaction
+  memory: 128MB
+  #disk you want to give to appliaction
+  disk_quota: 128MB
+  #help use compile the file when you push to cloud
+  buildpack: python_buildpack
+  #let the backend application begin。
+  command: python index.py
+services:
+- rabbitmq
+```
 
 ### **You can create a service instance by yourself**
 
@@ -145,7 +302,40 @@ Now back to our Application List and we can see the service we bind to the appli
 
 Now we can use our MQTT service to send data or reveice data，we already bind the p-rabbitmq service to our application，and we need to use it environment，so we need to add some code to the index.js。
 
-<iframe src="https://medium.com/media/658ada3813694450e214bcc10347e509" frameborder=0></iframe>
+<!--<iframe src="https://medium.com/media/658ada3813694450e214bcc10347e509" frameborder=0></iframe>-->
+
+```
+from flask import Flask,render_template
+import json
+import paho.mqtt.client as mqtt
+import os
+
+
+app = Flask(__name__)
+
+#port from cloud environment variable or localhost:3000
+port = int(os.getenv("PORT", 3000))
+
+@app.route('/',methods=['GET'])
+def root():
+
+    if(port==3000):
+        return 'hello world! i am in the local'
+    elif(port==int(os.getenv("PORT"))):
+        return render_template('index.html')
+        
+
+
+vcap_services=os.getenv('VCAP_SERVICES')
+vcap_services_js = json.loads(vcap_services)
+#change your service name not the service instance name
+service_name='p-rabbitmq' 
+broker    = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['host']
+username  = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['username'].strip()
+password  = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['password'].strip()
+mqtt_port = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['port']
+```
+
 > If you create your service instance yourself，you need to change the service_name in code。
 
 If you change finish，you need to push again，and type cf.exe logs python-demo-jimmy --recent。，you can see we have the correct result code and subscribe success。
@@ -163,7 +353,29 @@ we need to get broker(externalHosts) username password port
 > we need the externalHosts
 > port，username，password(in the prabbitmq=>mqtt)
 
-<iframe src="https://medium.com/media/58c38b976432710f2be8ac01dc0af8cd" frameborder=0></iframe>
+<!--<iframe src="https://medium.com/media/58c38b976432710f2be8ac01dc0af8cd" frameborder=0></iframe>-->
+
+```py
+
+import paho.mqtt.client as mqtt
+#externalHosts
+broker="xx.xx.xx.xx"
+#mqtt_port
+mqtt_port=1883
+#mqtt_username
+username="xxxxxxxx-b76f-43e9-8b35-bac8383bf941:53655435-f8e4-4c8f-99ce-8faf6575dfe4"
+password="xxxxxxxi4545r00AQ6oG9NB"
+def on_publish(client,userdata,result):             #create function for callback
+    print("data published")
+   
+client= mqtt.Client()                           #create client object
+
+client.username_pw_set(username,password)
+
+client.on_publish = on_publish                          #assign function to callback
+client.connect(broker,mqtt_port)                                 #establish connection
+client.publish("/hello","hi!")    
+```
 
 ![](https://cdn-images-1.medium.com/max/2000/1*TDTZ2ITHQHRIlmhUEx0O_A.png)
 
