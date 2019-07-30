@@ -91,4 +91,4 @@ open two terminal
 
 # Step By Step Tutorial
 
-[https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/REAMME.md](https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/REAMME.md)
+[https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/README.md](https://github.com/WISE-PaaS/example-python-iothub-sso/blob/master/source/README.md)
