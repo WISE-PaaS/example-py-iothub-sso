@@ -3,7 +3,11 @@
 
 This is WIES-PaaS iothub example-code include the sso and rabbitmq service。
 
-**https://wise-paas.advantech.com/en-us**
+[cf-introduce](https://advantech.wistia.com/medias/ll0ov3ce9e)
+
+[IotHub](https://advantech.wistia.com/medias/up3q2vxvn3)
+
+[SSO](https://advantech.wistia.com/medias/vay5uug5q6)
 
 ## Quick Start
 
