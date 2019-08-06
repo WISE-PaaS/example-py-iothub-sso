@@ -171,7 +171,7 @@ If you don't want it，you can ignore it。
     
     
         var myUrl = window.location.protocol + '//' + window.location.hostname;
-        var ssoUrl = myUrl.replace('python-demo-jimmy', 'portal-sso');
+        var ssoUrl = myUrl.replace('python-demo-try', 'portal-sso');
         var manageUrl = 'https://portal-management.wise-paas.io/organizations'
         document.getElementById('demo').innerHTML = myUrl;
         
