@@ -36,6 +36,8 @@ python3 package(those library you can try application in local):
     git clone this repository
 
 ## Login to WISE-PaaS 
+
+First we need to login to the WISE-PaaS use cf login，and we need to chech out the domain name ex:wise-paas.io，and you need to have WISE-PaaS/EnSaaS account。
     
 ![Imgur](https://i.imgur.com/JNJmxFy.png)
 
@@ -45,6 +47,82 @@ python3 package(those library you can try application in local):
     
     #check the cf status
     cf target
+
+## Application Introduce
+
+#### index.py
+
+This is a simple backend application use flask，you can run it use `python3 index.py` and listen on [localhost:3000](localhost:3000)，and the port can get the `3000` or port on WISE-PaaS。  
+
+`vcap_services` can get the application config on WISE-PaaS，it can help get the credential of your (iothub)mqtt service instance
+
+```py
+from flask import Flask
+import os
+
+app = Flask(__name__)
+
+#port from cloud environment variable or localhost:3000
+port = int(os.getenv("PORT", 3000))
+
+@app.route('/')
+def hello_world():
+    if(port==3000):
+        return 'hello world! iam in the local'
+    elif(port==int(os.getenv("PORT"))):
+        return 'Hello World! i am in the cloud'
+
+
+
+if __name__ == '__main__':
+    # Run the app, listening on all IPs with our chosen port number
+    app.run(host='0.0.0.0', port=port)
+    
+    
+    
+#mqtt config
+vcap_services = os.getenv('VCAP_SERVICES')
+vcap_services_js = json.loads(vcap_services)
+service_name = 'p-rabbitmq'
+broker = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['host']
+username = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['username'].strip()
+password = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['password'].strip()
+mqtt_port = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['port']
+
+
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code "+str(rc))
+    client.subscribe("/hello")
+    print('subscribe on /hello')
+
+
+def on_message(client, userdata, msg):
+    print(msg.topic+','+msg.payload.decode())
+
+
+client = mqtt.Client()
+
+client.username_pw_set(username, password)
+client.on_connect = on_connect
+client.on_message = on_message
+
+client.connect(broker, mqtt_port, 60)
+client.loop_start()    
+```
+
+**Notice:The service name need to be same on your WISE-PaaS Service name in Service List**
+
+![Imgur](https://i.imgur.com/6777rmg.png)
+
+#### requirements.txt
+
+Thie file help buildpack download the package for our application in WISE-PaaS。
+```
+Flask
+paho-mqtt
+```
+
+
 
 #### mainfest config
 open **`manifest.yml`** and editor the **application name**  to yours，because the appication can't duplicate。
@@ -81,6 +159,31 @@ Edit the **publisher.py** `broker、port、username、password` you can find in 
 * port :"VCAP_SERVICES => p-rabbitmq => mqtt => port"
 * username :"VCAP_SERVICES => p-rabbitmq => mqtt => username"
 * password: "VCAP_SERVICES => p-rabbitmq => mqtt => password"
+
+
+Publisher.py
+```py
+import paho.mqtt.client as mqtt
+import random 
+#externalHosts
+broker="xx.81.xx.10"
+#mqtt_port
+mqtt_port=1883
+#mqtt_username
+username="xxxxxxxx-b76f-43e9-8b35-xxxxx83bf941:7b166606-142c-4d00-8f8c-ab7fee64d6db"
+password="xxxxxxxxbWGXpuOK5MyxMhgDk"
+def on_publish(client,userdata,result):             #create function for callback
+    print("data published")
+   
+client= mqtt.Client()                           #create client object
+
+client.username_pw_set(username,password)
+
+client.on_publish = on_publish                          #assign function to callback
+client.connect(broker,mqtt_port)                                 #establish connection
+client.publish("/hello",random.randint(10,30))    
+
+```
 
 open two terminal
     
