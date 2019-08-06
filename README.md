@@ -211,7 +211,7 @@ If you don't want it，you can ignore it。
 ```
 
 
-## push application and get environment
+#### push application and get environment
 
 
     #cf push {application name}
@@ -222,7 +222,7 @@ If you don't want it，you can ignore it。
 
 
     
-Edit the **publisher.py** `broker、port、username、password` you can find in env.json
+#### Edit the **publisher.py** `broker、port、username、password` you can find in env.json
 
 * bokrer:"VCAP_SERVICES => p-rabbitmq => externalHosts"
 * port :"VCAP_SERVICES => p-rabbitmq => mqtt => port"
