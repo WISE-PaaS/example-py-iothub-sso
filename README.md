@@ -54,7 +54,7 @@ First we need to login to the WISE-PaaS use cf login，and we need to chech out 
 
 This is a simple backend application use flask，you can run it use `python3 index.py` and listen on [localhost:3000](localhost:3000)，and the port can get the `3000` or port on WISE-PaaS。  
 
-`vcap_services` can get the application config on WISE-PaaS，it can help get the credential of your (iothub)mqtt service instance
+`vcap_services` can get the application config on WISE-PaaS，it can help get the credential of your (iothub)mqtt service instance，`client=mqtt.connect` can help us connect to mqtt and when we connect we will subscribe the `/hello` topic in  `on_connect`，`on_message` ca n receivec the message what we send。
 
 ```py
 from flask import Flask
