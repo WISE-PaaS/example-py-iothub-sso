@@ -220,6 +220,7 @@ If you don't want it，you can ignore it。
     #get the application environment
     cf env python-demo-try > env.json 
 
+![Imgur](https://i.imgur.com/ZjrjuTW.png)
 
     
 #### Edit the **publisher.py** `broker、port、username、password` you can find in env.json
