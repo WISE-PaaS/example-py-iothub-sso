@@ -224,12 +224,15 @@ If you don't want it，you can ignore it。
 ![Imgur](https://i.imgur.com/ZjrjuTW.png)
 
     
+ 
 #### Edit the **publisher.py** `broker、port、username、password` you can find in env.json
 
 * bokrer:"VCAP_SERVICES => p-rabbitmq => externalHosts"
 * port :"VCAP_SERVICES => p-rabbitmq => mqtt => port"
 * username :"VCAP_SERVICES => p-rabbitmq => mqtt => username"
 * password: "VCAP_SERVICES => p-rabbitmq => mqtt => password"
+
+This file can send mqtt message to the topic `/hello` and we send random number you can change it to other thing
 
 
 Publisher.py
