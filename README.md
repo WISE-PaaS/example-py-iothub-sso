@@ -83,6 +83,8 @@ if __name__ == '__main__':
 #mqtt config
 vcap_services = os.getenv('VCAP_SERVICES')
 vcap_services_js = json.loads(vcap_services)
+
+#need to same as rabbitmq service name on WISE-PaaS
 service_name = 'p-rabbitmq'
 broker = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['host']
 username = vcap_services_js[service_name][0]['credentials']['protocols']['mqtt']['username'].strip()
